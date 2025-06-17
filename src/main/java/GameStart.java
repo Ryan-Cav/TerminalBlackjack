@@ -10,9 +10,12 @@ public class GameStart {
 		Deck deck = new Deck();
 		while(response.equals("y")) {
 			System.out.println("Game is Starting!");
-			Deck.Card c = deck.drawCard();
-			System.out.print(c.num + " " + c.suit + " " + c.value);
-			System.out.println();
+			Deck.Card hc = deck.drawCard();
+			Deck.Card hc2 = deck.drawCard();
+			System.out.println(hc.num + hc.suit + " " + hc2.num + hc2.suit);
+			Deck.Card pc = deck.drawCard();
+			Deck.Card pc2 = deck.drawCard();
+			System.out.println(pc.num + pc.suit + " " + pc2.num + pc2.suit);
 			System.out.print("Do you want to keep playing (Y/N) ? ");
 			response = inputScanner.nextLine().toLowerCase();
 		}	
