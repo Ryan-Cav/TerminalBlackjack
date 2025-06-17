@@ -20,6 +20,13 @@ public class GameStart {
 			playerCards.add(deck.drawCard());
 			playerCards.add(deck.drawCard());
 			System.out.println(playerCards.get(0).num + playerCards.get(0).suit + " " + playerCards.get(1).num + playerCards.get(1).suit);
+			Player user = new Player(playerCards);
+			int houseResult = house.getHandValue();
+			int userResult = user.getHandValue();
+			System.out.println("House result: " + houseResult + " | User result: " + userResult);
+			if (houseResult > userResult) System.out.println("House wins");
+			else if (userResult > houseResult) System.out.println("User wins");
+			else System.out.println("Push");
 			System.out.print("Do you want to keep playing (Y/N) ? ");
 			response = inputScanner.nextLine().toLowerCase();
 		}	
