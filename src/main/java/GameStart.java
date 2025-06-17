@@ -27,6 +27,7 @@ public class GameStart {
 			if (houseResult > userResult) System.out.println("House wins");
 			else if (userResult > houseResult) System.out.println("User wins");
 			else System.out.println("Push");
+			System.out.println();
 			System.out.print("Do you want to keep playing (Y/N) ? ");
 			response = inputScanner.nextLine().toLowerCase();
 		}	
