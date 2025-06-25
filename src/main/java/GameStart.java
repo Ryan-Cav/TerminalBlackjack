@@ -5,6 +5,7 @@ public class GameStart {
 	private static Scanner inputScanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		clearScreen();
 		System.out.println("Do you want to play TERMINAL BLACKJACK?");
 		System.out.print("Y/N: ");
 		String response = inputScanner.nextLine().toLowerCase();
@@ -26,9 +27,10 @@ public class GameStart {
 
 			System.out.println("House: " + houseCards.get(0).num + houseCards.get(0).suit);
 			System.out.println("------------------------");
-			System.out.println("Your cards: " + playerCards.get(0).num + playerCards.get(0).suit + " "
-					+ playerCards.get(1).num + playerCards.get(1).suit);
+			System.out.print("Your cards: ");
+			printHand(user);
 
+			// Check Blackjacks
 			int houseValue = house.getHandValue();
 			int userValue = user.getHandValue();
 			if (houseValue == 21)
@@ -39,7 +41,7 @@ public class GameStart {
 				System.out.println("Blackjack! User wins: " + playerCards.get(0).num
 						+ playerCards.get(0).suit
 						+ " " + playerCards.get(1).num + playerCards.get(1).suit);
-			else {
+			else { // Continue Game
 				while (!response.equals("s") && userValue < 21) {
 					response = "";
 					System.out.println("User hand value: " + userValue);
@@ -50,6 +52,7 @@ public class GameStart {
 					if (response.equals("h")) {
 						userValue = user.addCard(deck.drawCard());
 						printHand(user);
+						System.out.println("House hand value: " + houseCards.get(0).value);
 					}
 				}
 				if (userValue > 21)
@@ -59,6 +62,7 @@ public class GameStart {
 						houseValue = house.addCard(deck.drawCard());
 						printHand(house);
 					}
+					System.out.println("House hand value: " + house.getHandValue());
 					if (house.getHandValue() > 21)
 						System.out.println("House Busts. You win!");
 					else if (house.getHandValue() > user.getHandValue()) {
@@ -81,7 +85,7 @@ public class GameStart {
 		for (Deck.Card c : player.getHand()) {
 			System.out.print(c.num + c.suit + " ");
 		}
-		System.out.println(player.getHandValue());
+		System.out.println();
 	}
 
 	private static void clearScreen() {
