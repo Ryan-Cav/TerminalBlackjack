@@ -22,10 +22,10 @@ public class GameStart {
 			playerCards.add(deck.drawCard());
 			houseCards.add(deck.drawCard());
 
-			Player house = new Player(houseCards);
-			Player user = new Player(playerCards);
+			Player house = new Player(houseCards, "House");
+			Player user = new Player(playerCards, "User");
 
-			System.out.println("House: " + houseCards.get(0).num + houseCards.get(0).suit);
+			house.printCardValue(0);
 			System.out.println("------------------------");
 			System.out.print("Your cards: ");
 			printHand(user);
@@ -44,7 +44,7 @@ public class GameStart {
 			else { // Continue Game
 				while (!response.equals("s") && userValue < 21) {
 					response = "";
-					System.out.println("User hand value: " + userValue);
+					user.printHandValue();
 					while (!(response.equals("h") || response.equals("s"))) {
 						System.out.println("Do you want to Hit or Stand? (h/s)");
 						response = inputScanner.nextLine().toLowerCase();
@@ -52,7 +52,7 @@ public class GameStart {
 					if (response.equals("h")) {
 						userValue = user.addCard(deck.drawCard());
 						printHand(user);
-						System.out.println("House hand value: " + houseCards.get(0).value);
+						house.printCardValue(0);
 					}
 				}
 				if (userValue > 21)
@@ -62,7 +62,7 @@ public class GameStart {
 						houseValue = house.addCard(deck.drawCard());
 						printHand(house);
 					}
-					System.out.println("House hand value: " + house.getHandValue());
+					house.printHandValue();
 					if (house.getHandValue() > 21)
 						System.out.println("House Busts. You win!");
 					else if (house.getHandValue() > user.getHandValue()) {

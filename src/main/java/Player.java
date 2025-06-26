@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 
 public class Player {
-	public ArrayList<Deck.Card> hand;
+	private ArrayList<Deck.Card> hand;
+	private String name;
 
-	public Player(ArrayList<Deck.Card> hand) {
+	public Player(ArrayList<Deck.Card> hand, String name) {
 		this.hand = hand;
+		this.name = name;
 	}
 
 	public int addCard(Deck.Card card) {
@@ -35,5 +37,13 @@ public class Player {
 
 	public ArrayList<Deck.Card> getHand() {
 		return hand;
+	}
+
+	public void printHandValue() {
+		System.out.println(this.name + " hand value: " + getHandValue());
+	}
+
+	public void printCardValue(int num) {
+		System.out.println(this.name + " card: " + hand.get(num).num + hand.get(num).suit);
 	}
 }
