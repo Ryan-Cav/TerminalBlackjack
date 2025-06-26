@@ -14,13 +14,21 @@ public class Player {
 
 	public int getHandValue() {
 		int val = 0;
+		int numAces = 0;
 		for (Deck.Card c : hand) {
-			// TODO: Fix, doesn't work for hand with multiple aces
-			if (c.num.equals("A") && val + 11 <= 21) {
-				val += 11;
+			if (c.num.equals("A")) {
+				numAces += 1;
 			} else {
 				val += c.value;
 			}
+		}
+		while (numAces > 0) {
+			if (val + 11 <= 21) {
+				val += 11;
+			} else {
+				val += 1;
+			}
+			numAces--;
 		}
 		return val;
 	}
