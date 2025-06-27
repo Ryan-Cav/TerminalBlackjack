@@ -1,4 +1,3 @@
-To Run the program:
-    PWD:        TerminalBlackjack
-    Compile:    javac -d target src/main/java/*.java
-    Run:        java -cp target GameStart
+# This is a learning project to get used to Neovim / Tmux / Bash #
+
+To Run the program: ./run.sh
