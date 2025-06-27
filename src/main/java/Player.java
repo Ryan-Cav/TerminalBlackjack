@@ -39,11 +39,28 @@ public class Player {
 		return hand;
 	}
 
+	public void printHand() {
+		for (Deck.Card c : this.hand) {
+			System.out.print(c.num + c.suit + " ");
+		}
+		System.out.println();
+	}
+
 	public void printHandValue() {
 		System.out.println(this.name + " hand value: " + getHandValue());
 	}
 
 	public void printCardValue(int num) {
 		System.out.println(this.name + " card: " + hand.get(num).num + hand.get(num).suit);
+	}
+
+	public void printWinner(Player loser) {
+		System.out.println(this.name + " wins");
+		System.out.print(loser.name + " hand: ");
+		loser.printHand();
+		loser.printHandValue();
+		System.out.print(this.name + " hand: ");
+		printHand();
+		printHandValue();
 	}
 }

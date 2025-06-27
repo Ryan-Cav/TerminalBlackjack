@@ -14,7 +14,8 @@ public class GameStart {
 			clearScreen();
 			System.out.println("Game is Starting!");
 
-			// Draw house cards
+			// Setup game
+			// TODO: Move this out to a setup game method
 			ArrayList<Deck.Card> houseCards = new ArrayList<Deck.Card>();
 			ArrayList<Deck.Card> playerCards = new ArrayList<Deck.Card>();
 			playerCards.add(deck.drawCard());
@@ -28,16 +29,16 @@ public class GameStart {
 			house.printCardValue(0);
 			System.out.println("------------------------");
 			System.out.print("Your cards: ");
-			printHand(user);
+			user.printHand();
 
 			// Check Blackjacks
 			int houseValue = house.getHandValue();
 			int userValue = user.getHandValue();
-			if (houseValue == 21)
+			if (houseValue == 21) // TODO: change these to user current print methods
 				System.out.println("Blackjack! House wins: " + houseCards.get(0).num
 						+ houseCards.get(0).suit + " "
 						+ houseCards.get(1).num + houseCards.get(1).suit);
-			else if (userValue == 21)
+			else if (userValue == 21) // TODO: change these to user current print methods
 				System.out.println("Blackjack! User wins: " + playerCards.get(0).num
 						+ playerCards.get(0).suit
 						+ " " + playerCards.get(1).num + playerCards.get(1).suit);
@@ -51,41 +52,36 @@ public class GameStart {
 					}
 					if (response.equals("h")) {
 						userValue = user.addCard(deck.drawCard());
-						printHand(user);
+						user.printHand();
 						house.printCardValue(0);
 					}
 				}
-				if (userValue > 21)
-					System.out.println("Bust. House wins.");
-				else {
+				if (userValue > 21) {
+					System.out.println("Bust.");
+					house.printWinner(user);
+				} else {
 					while (houseValue < 17) {
 						houseValue = house.addCard(deck.drawCard());
-						printHand(house);
+						house.printHand();
 					}
 					house.printHandValue();
 					if (house.getHandValue() > 21)
 						System.out.println("House Busts. You win!");
 					else if (house.getHandValue() > user.getHandValue()) {
-						System.out.println("House Wins!");
-						printHand(house);
+						house.printWinner(user);
 					} else if (user.getHandValue() > house.getHandValue()) {
-						System.out.println("You Win!");
-						printHand(user);
-					} else
+						user.printWinner(house);
+					} else {
 						System.out.println("Push");
+						house.printHandValue();
+						user.printHandValue();
+					}
 				}
 			}
 			System.out.print("Do you want to keep playing (Y/N) ? ");
 			response = inputScanner.nextLine().toLowerCase();
 			clearScreen();
 		}
-	}
-
-	private static void printHand(Player player) {
-		for (Deck.Card c : player.getHand()) {
-			System.out.print(c.num + c.suit + " ");
-		}
-		System.out.println();
 	}
 
 	private static void clearScreen() {
