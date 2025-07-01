@@ -1,5 +1,7 @@
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class GameStart {
 	private static Scanner inputScanner = new Scanner(System.in);
@@ -16,15 +18,9 @@ public class GameStart {
 
 			// Setup game
 			// TODO: Move this out to a setup game method
-			ArrayList<Deck.Card> houseCards = new ArrayList<Deck.Card>();
-			ArrayList<Deck.Card> playerCards = new ArrayList<Deck.Card>();
-			playerCards.add(deck.drawCard());
-			houseCards.add(deck.drawCard());
-			playerCards.add(deck.drawCard());
-			houseCards.add(deck.drawCard());
-
-			Player house = new Player(houseCards, "House");
-			Player user = new Player(playerCards, "User");
+			ArrayList<Player> players = setupGame(deck);
+			Player house = players.get(0);
+			Player user = players.get(1);
 
 			house.printCardValue(0);
 			System.out.println("------------------------");
@@ -34,15 +30,13 @@ public class GameStart {
 			// Check Blackjacks
 			int houseValue = house.getHandValue();
 			int userValue = user.getHandValue();
-			if (houseValue == 21) // TODO: change these to user current print methods
-				System.out.println("Blackjack! House wins: " + houseCards.get(0).num
-						+ houseCards.get(0).suit + " "
-						+ houseCards.get(1).num + houseCards.get(1).suit);
-			else if (userValue == 21) // TODO: change these to user current print methods
-				System.out.println("Blackjack! User wins: " + playerCards.get(0).num
-						+ playerCards.get(0).suit
-						+ " " + playerCards.get(1).num + playerCards.get(1).suit);
-			else { // Continue Game
+			if (houseValue == 21) {
+				System.out.println("Blackjack!");
+				house.printWinner(user);
+			} else if (userValue == 21) {
+				System.out.println("Blackjack!");
+				house.printWinner(user);
+			} else { // Continue Game
 				while (!response.equals("s") && userValue < 21) {
 					response = "";
 					user.printHandValue();
@@ -82,6 +76,18 @@ public class GameStart {
 			response = inputScanner.nextLine().toLowerCase();
 			clearScreen();
 		}
+	}
+
+	private static ArrayList<Player> setupGame(Deck deck) {
+		ArrayList<Deck.Card> houseCards = new ArrayList<Deck.Card>();
+		ArrayList<Deck.Card> playerCards = new ArrayList<Deck.Card>();
+		playerCards.add(deck.drawCard());
+		houseCards.add(deck.drawCard());
+		playerCards.add(deck.drawCard());
+		houseCards.add(deck.drawCard());
+
+		return new ArrayList<Player>(Stream.of(new Player(houseCards, "house"), new Player(playerCards, "user"))
+				.collect(Collectors.toList()));
 	}
 
 	private static void clearScreen() {
